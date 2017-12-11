@@ -1,0 +1,4 @@
+﻿  ISBN.cpp
+e:\作业\programing finance\hw4\hw4\isbn.cpp(17): warning C4101: “number_in_list”: 未引用的局部变量
+  HW4.vcxproj -> E:\作业\programing finance\HW4\Debug\HW4.exe
+  HW4.vcxproj -> E:\作业\programing finance\HW4\Debug\HW4.pdb (Partial PDB)

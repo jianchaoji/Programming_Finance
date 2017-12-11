@@ -1,0 +1,4 @@
+﻿  find_solution.cpp
+e:\作业\programing finance\hw5\homework(2)\homework(2)\find_solution.cpp(65): warning C4715: “recursion”: 不是所有的控件路径都返回值
+  Homework(2).vcxproj -> E:\作业\programing finance\HW5\Homework(2)\Debug\Homework(2).exe
+  Homework(2).vcxproj -> E:\作业\programing finance\HW5\Homework(2)\Debug\Homework(2).pdb (Partial PDB)

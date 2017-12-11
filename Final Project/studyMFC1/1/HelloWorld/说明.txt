@@ -1,0 +1,23 @@
+No.1
+
+最简单的MFC程序
+“Hello World”
+
+演示如何单击一个按钮后弹出一个显示“Hello World!”的消息框。
+
+重点：Button的COMMAND消息的关联，以及MessageBox的使用。
+
+
+新建一个基于对话框的MFC工程
+
+中间画一个Button，属性中Caption项改为"Show"
+
+双击它，VC会弹出窗口询问是否创建一个函数与它的COMMAND消息关联，
+
+点击确定，产生一个新的空函数。
+
+加入：
+MessageBox("Hello World!","Hello",MB_OK);
+即可
+
+MessageBox()函数的作用是显示一个消息框，第一个参数是消息框的内容，第二个参数是消息框的标题，最后一个是标志，一般设为MB_OK。

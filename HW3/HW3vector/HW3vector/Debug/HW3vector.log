@@ -1,0 +1,5 @@
+﻿  Hwvector.cpp
+e:\作业\programing finance\hw3\hw3vector\hw3vector\hwvector.cpp(211): warning C4101: “j”: 未引用的局部变量
+e:\作业\programing finance\hw3\hw3vector\hw3vector\hwvector.cpp(211): warning C4101: “i”: 未引用的局部变量
+  HW3vector.vcxproj -> E:\作业\programing finance\HW3\HW3vector\Debug\HW3vector.exe
+  HW3vector.vcxproj -> E:\作业\programing finance\HW3\HW3vector\Debug\HW3vector.pdb (Partial PDB)

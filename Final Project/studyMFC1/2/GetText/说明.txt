@@ -1,0 +1,33 @@
+No.2
+
+简单的MFC程序
+“GetText”
+
+演示如何从窗口中的控件上获取文字。
+
+重点：建立和控件资源关联的变量。
+
+
+新建一个基于对话框的MFC工程，
+
+上面画一个Edit和一个Button，
+
+适当修改Edit和Button的属性（例如改成多行显示什么的）；
+
+
+按Ctrl+W打开ClassWizard，
+
+在Member Variables页中，找到Edit控件对应的资源ID（一般是IDC_EDIT1），
+
+选择它，点击右边的按钮“Add Variable...”
+
+在其中输入变量的名字（要以m_开头，本例为m_Text1），下面选择变量的类型（默认为CString字符串类），确定。
+
+
+双击Button，加入：
+	UpdateData(TRUE);
+	MessageBox(m_Text1,"这是输入的内容",MB_OK);
+
+即可。
+
+其中UpdateData(TRUE)是让系统从窗口上控件中读值到其关联的变量中（本例把用户输入在IDC_EDIT1中的值读到m_Text1中）。

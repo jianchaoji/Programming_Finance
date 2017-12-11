@@ -1,0 +1,119 @@
+No.4
+
+简单的MFC多对话框演示程序
+“MultiDialog”
+
+演示如何在工程中拥有多个对话框，及如何在一个对话框中调用另一个对话框。
+
+重点：1、多个对话框类的建立；2、对话框的模式（Modal）调用方法；3、Spin控件的使用。
+
+
+新建一个基于对话框的MFC工程，
+
+通过菜单"Insert>>Resource"打开添加资源对话框，
+
+在其中选择Dialog后点击New创建一个新的对话框
+
+
+按Ctrl+W打开ClassWizard，系统会提示刚才创建了一个新的对话框资源，是否建立对应的类，
+
+选择建立，然后在New Class窗口中Class Name栏输入它的名称：CSubClass1，
+
+确定后系统会自动生成SubClass1.h和SubClass1.cpp并加入工程中，其中有已经创建好的CSubClass1的类的基本代码。
+
+
+把这个对话框的Caption属性改为“难度选择”，在它上面画三个Radio“简单”、“标准”、“困难”，
+
+并建立相关联的变量m_Option1。（要注意的是在ClassWizard中注意Class Name中应该选CSubClass1而不是之前的主对话框类）
+
+
+按照相同方法建立第二个新对话框，类名“CSubClass2”，Caption为“关卡选择”。
+
+在上面画一个Edit和一个Spin，注意先画Edit后画Spin，将Spin的Auto buddy和Set buddy integer勾上。
+
+按Ctrl+W打开ClassWizard，为Edit建立关联变量，不过注意是int型而不是CString型，
+
+也为Spin建立关联变量m_Spin1，注意这次是Control型变量CSpinButtonCtrl。
+
+
+
+
+下面为这两个对话框添加代码。
+
+双击“难度选择”对话框的OK按钮，建立对话框的OnOK映射。
+
+在其中加入（在CDialog::OnOK();之前）：
+	UpdateData(TRUE);
+	if ((m_Option1>2) ||(m_Option1<0))
+	{
+		MessageBox("错误的选择！","提示",MB_OK);
+		return;
+	}
+	
+
+
+下面对“关卡选择”对话框添加初始化代码，
+
+由于关卡的有效值只有1到6，因此需要在初始化时设置Spin控件的有效值范围。
+
+按Ctrl+W打开ClassWizard，在左侧列表选择这个对话框类CSubDialog2，
+
+在右侧列表中选择WM_INITDIALOG，点击右边的“Add Function...”按钮，
+
+接着点击右边的“Edit Code”按钮，在其中中加入（在CDialog::OnInitDialog()那句之后，在return TRUE那句之前）：
+
+	m_Spin1.SetRange(1,6);
+	m_Text1=1;
+	m_Spin1.SetPos(1);
+
+
+其中CSpinButtonCtrl::SetRange()函数的作用是设置和他关联的Spin控件的范围，两个参数分别是下界和上界。
+
+而CSpinButtonCtrl::SetPos()是设定Spin的当前位置。
+
+
+
+
+两个新的对话框都已建立完毕，下来是如何在主对话框中使用的问题。
+
+首先，两个新对话框都有各自的类，分别在SubDialog1.h和SubDialog2.h中有定义。（类的细节则在对应的cpp中定义）
+
+因此，主对话框想要调用这两个新对话框，需要先包含这两个头文件，
+
+在你要使用的地方（本例是MultiDialogDlg.cpp中）文件前面加上
+#include "SubDialog1.h"
+#include "SubDialog2.h"
+
+
+然后在想要调用的地方就可以使用了。
+
+本例中，首先为主窗口的两个Edit建立CString型关联变量m_Text1和m_Text2，
+
+然后在两个按钮的消息映射函数中分别加入：
+
+	CSubDialog1 dialog1;      //定义CSubDialog1型对话框的一个新对象
+	dialog1.DoModal();        //使用“模式”调用，显示对话框
+	m_Text1.Format("%d",dialog1.m_Option1);  //此句在上面对话框没有关闭前不会执行到
+	UpdateData(FALSE);	
+
+和
+
+	CSubDialog2 dialog1;
+	dialog1.DoModal();
+	m_Text2.Format("%d",dialog1.m_Text1);
+	UpdateData(FALSE);
+
+
+其中第一句均为定义对话框新实例的语句，定义一个你想要的类型的对话框。
+
+第二句是通过调用CDialog::DoModal()方法，来显示这个对话框，并进入“模式”（Modal）状态
+
+在“模式”状态，当子对话框没有关闭之前，调用它的父对话框不能被响应，
+
+并且其语句执行会停留在刚才的DoModal语句上等待，直到子对话框关闭才接着执行下一个语句。
+
+第三第四句将子对话框得到的数据（即类的成员变量）显示在父对话框的Edit上。
+
+
+四句执行完后退出该函数，这时刚才定义的CSubDialog1等对话框类变量被销毁，因此创建的话框也被销毁。
+

@@ -1,0 +1,71 @@
+No.3
+
+简单的MFC计算器程序
+“smpCalc”
+
+演示如何把用户输入的数据进行计算并显示出来。
+
+重点：1、Radio控件的使用；2、更新控件的数据（即从程序中更改控件显示的数据）。
+
+
+新建一个基于对话框的MFC工程，
+
+上面画三个个Edit，分别关联三个CString变量。（本例为m_Text1,m_Text2,m_Text3）
+
+画四个Radio,修改其名称分别为加、减、乘、除。
+
+注意这四个Raido必须连续画出，并在第一个Radio的Group属性上打勾。
+
+
+按Ctrl+W打开ClassWizard，
+
+在Member Variables页中，如果正确的话，raido控件中只有第一个raido的资源ID显示出来（一般是IDC_RADIO1），
+
+选择它，点击右边的按钮“Add Variable...”，关联一个int型变量（本例为m_Option1），确定。
+
+
+再画一个Button，名称“计算”
+
+双击Button，加入：
+	UpdateData(TRUE);
+	double val1=atof(m_Text1);
+	double val2=atof(m_Text2);
+
+	double result1=0;
+	
+	switch (m_Option1)
+	{
+	case 0:
+		result1=val1+val2;
+		break;
+	case 1:
+		result1=val1-val2;
+		break;
+	case 2:
+		result1=val1*val2;
+		break;
+	case 3:
+		if (val2==0.0)
+		{
+			MessageBox("除数为零！","提示",MB_OK);
+			return;
+		}
+		result1=val1/val2;
+		break;
+	default:
+		MessageBox("错误的选择！","提示",MB_OK);
+		return;
+	}
+
+	m_Text3.Format("%.11lg",result1);
+	UpdateData(FALSE);
+即可。
+
+其中前面的UpdateData(TRUE)把两个EDIT的值，以及Radio的状态读到变量中，
+
+选择的是第一个Radio的话m_Option的值就为0，第二个的话是1，后面依次类推。
+
+atof是把字符串转换成double的转换函数。
+CString::Format()函数和sprintf函数功能类似。
+
+最后一个UpdateData(FALSE)，是把关联变量的值写回到窗口控件上，用以呈现给用户。

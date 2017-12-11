@@ -1,0 +1,21 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: smpCalc - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/smpCalc.res" /d "_DEBUG" /d "_AFXDLL" "D:\Program Files\Microsoft Visual Studio\MyProjects\sample\studyMFC1\3\smpCalc\smpCalc.rc"" 
+Creating command line "link.exe /nologo /subsystem:windows /incremental:yes /pdb:"Debug/smpCalc.pdb" /debug /machine:I386 /out:"Debug/smpCalc.exe" /pdbtype:sept  ".\Debug\smpCalc.obj" ".\Debug\smpCalcDlg.obj" ".\Debug\StdAfx.obj" ".\Debug\smpCalc.res" "
+<h3>Output Window</h3>
+Compiling resources...
+Linking...
+
+
+
+<h3>Results</h3>
+smpCalc.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

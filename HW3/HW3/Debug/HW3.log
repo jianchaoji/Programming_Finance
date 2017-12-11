@@ -1,0 +1,4 @@
+﻿  matrix.cpp
+e:\作业\programing finance\hw3\hw3\matrix.cpp(232): warning C4101: “j”: 未引用的局部变量
+  HW3.vcxproj -> E:\作业\programing finance\HW3\Debug\HW3.exe
+  HW3.vcxproj -> E:\作业\programing finance\HW3\Debug\HW3.pdb (Partial PDB)

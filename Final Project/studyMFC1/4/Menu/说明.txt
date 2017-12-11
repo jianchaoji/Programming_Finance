@@ -1,0 +1,119 @@
+No.4
+
+简单的MFC菜单演示程序
+“Menu”
+
+演示如何为对话框创建菜单并创建消息映射，以及如何捕获按键。
+
+重点：1、Menu的创建及其消息映射；2、通过PreTranslateMessage响应按键消息。
+
+
+新建一个基于对话框的MFC工程，
+
+通过菜单"Insert>>Resource"打开添加资源对话框，
+
+在其中选择Menu后点击New创建新菜单
+
+
+在出现的空菜单条上选择第一个空处，修改它的Caption属性为“文件(&O)”，
+
+可以看到它自动变成了一个菜单项，同时可以看到字母O下面有下滑线，代表热键。
+
+在刚才的菜单下面的子菜单空处继续添加菜单项“新建\tCtrl+N”、“打开\tCtrl+O”和“保存\tCtrl+S”，
+
+可以看到由于制表符“\t”的作用，菜单标题中的“Ctrl+N”等快捷键标示都对齐了。
+
+选择它们下一个空处，不添加Caption属性，直接在Separator属性前打勾，下一项就变成了分割线。
+
+接着向上面一样添加“退出\tAlt+F4”菜单项。
+
+
+按照相同方法建立“编辑(&E)”菜单及其子菜单“复制”、“剪切”、“粘贴”和“其它”，
+
+其中“其它”菜单项又拥有子菜单，通过在其Pup-up属性前打勾设定。其子菜单为“撤销”和“重复”。
+
+
+按Ctrl+W打开ClassWizard，系统会提示是否将菜单关联到当前一个窗口上（或是建立新类），
+
+选择关联到主对话框类上（本例是CMenuDlg）。
+
+
+编辑主对话框资源的属性，在Menu项中选择刚才创建的菜单资源ID（本例是IDR_MENU1）。
+
+
+
+对这些菜单项建立消息映射本质与Button相同，都是接收系统的COMMAND消息，但是因为无法通过双击来简单的建立，
+
+因此需要在ClassWizard中建立映射。（这个才是正规的作法）
+
+
+按Ctrl+W打开ClassWizard，在“Message Maps”页中，左侧列表中选择需要建立映射的菜单资源ID，
+
+右侧列表中选择要映射的消息，本例中是COMMAND消息，然后点击右边的“Add Function...”按钮，
+
+会弹出和双击Button一样的窗口询问要创建的函数名，点击确定后函数创建完成，
+
+接着直接点击右边的“Edit Code”即可进入代码窗口编辑刚刚添加完成的函数。
+
+
+本例仅为了演示菜单操作，因此每个菜单项的映射函数中只有一句：
+
+MessageBox("你执行了\"XXX\"命令","提示",MB_OK);
+
+
+按照上面的做法把所有菜单项都进行消息映射。
+
+
+下来考虑实现“文件”菜单下的Ctrl+N、Ctrl+O、Ctrl+S等快捷键，
+
+快捷键有两种实现方法，一种是MFC提供的SDI/MDI工程中的快捷键表，
+
+另一种是直接捕获键盘消息来判断用户是否按下指定快捷键，本例采用后者。
+
+
+要保证先于窗体上的控件捕获到按键消息，必须使用PreTranslateMessage方法。
+
+按Ctrl+W打开ClassWizard，在左侧列表选择当前对话框类（本例是CMenuDlg），
+
+在右侧列表中选择PreTranslateMessage，点击右边的“Add Function...”按钮，
+
+接着点击右边的“Edit Code”按钮，在其中中加入（注意必须在return那句之前）：
+
+	if (pMsg->message==WM_KEYDOWN && (GetKeyState(VK_CONTROL)&0x8000))
+	{
+		if (pMsg->wParam=='N')
+		{
+			OnMenuitem32771();
+		}else if (pMsg->wParam=='O')
+		{
+			OnMenuitem32772();
+		}else if (pMsg->wParam=='S')
+		{
+			OnMenuitem32773();
+		}
+	}
+
+其中OnMenuitem32771()、OnMenuitem32772()、OnMenuitem32773()分别是
+
+本例中“新建\tCtrl+N”、“打开\tCtrl+O”和“保存\tCtrl+S”三个菜单项的消息映射函数。
+
+pMsg是一个MSG类型结构的指针，表示一个消息。
+
+消息内容包括三个要素，消息类型，以及消息的两个参数wParam和lParam。
+
+它的message成员（即MSG::message）表示消息的类型，WM_KEYDOWN指按键按下的消息。
+
+两个参数wParam和lParam根据消息类型的不同会代表不同的意思，本例中
+
+WM_KEYDOWN消息的wParam参数代表按下的键virtual-key code码（通常是其ASCII码）。
+
+
+GetKeyState()是一个获取按键状态的函数，在本例中用于判断Ctrl键是否处于按下状态，
+
+它的参数是要查看的按键virtual-key code码，VK_CONTROL是Ctrl键的virtual-key code码，
+
+它的返回值是一个16位整数（SHORT），若最高位是1则表示按键按下，最高位是0则表示未按下，
+
+因此通过对其进行一个“& 0x8000”的“与”位运算来检测最高位是否为1。
+
+

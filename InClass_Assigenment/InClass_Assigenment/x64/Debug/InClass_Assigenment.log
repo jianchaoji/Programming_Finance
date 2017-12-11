@@ -1,0 +1,5 @@
+﻿  source.cpp
+e:\homework\programing finance\inclass_assigenment\inclass_assigenment\source.cpp(57): warning C4244: “return”: 从“WPARAM”转换到“int”，可能丢失数据
+e:\homework\programing finance\inclass_assigenment\inclass_assigenment\source.cpp(73): error C2065: “GWL_HINSTANCE”: 未声明的标识符
+e:\homework\programing finance\inclass_assigenment\inclass_assigenment\source.cpp(87): error C2660: “CreateWindowExA”: 函数不接受 11 个参数
+e:\homework\programing finance\inclass_assigenment\inclass_assigenment\source.cpp(101): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
